@@ -21,7 +21,7 @@ pip install -r requirements.txt
 
 Пример файла `.env`
 
-`BITLY_API_TOKEN='[наш_токен_к_API_полученый_после_регистрации]'`(https://dev.bitly.com/),
+`BITLY_API_TOKEN ='токен_к_API_полученый_после_регистрации'`
 
 ### Пример работы скрипта:
 
