@@ -13,7 +13,7 @@ def is_bitlink(url_parse, token):
 
 
 def shorten_link(url, token):
-    link_for_shorten = URL_MAIN
+    link_for_shorten = 'https://api-ssl.bitly.com/v4/bitlinks'
     headers = {'Authorization': token}
     data = {'long_url': url}
     response = requests.post(link_for_shorten, headers=headers, json=data)
@@ -30,17 +30,16 @@ def count_clicks(url_parse, token):
 
 
 def main():
+    load_dotenv()
+    token = os.getenv('BITLY_API_TOKEN')
     parser = argparse.ArgumentParser()
     parser.add_argument('name', help='ссылка для проверки')
     namespace = parser.parse_args()
-
     url = namespace.name
     url_parse = urlparse(url)[1] + urlparse(url)[2]
-    load_dotenv()
-    token = os.getenv('BITLY_API_TOKEN')
-    if is_bitlink(url, token):
+    if is_bitlink(url_parse, token):
         try:
-            clicks = count_clicks(url, token)
+            clicks = count_clicks(url_parse, token)
             print(f'По вашей ссылке прошли: {clicks} раз(a)')
         except requests.exceptions.HTTPError:
             print('Не корректная ссылка!')
@@ -50,7 +49,6 @@ def main():
             print(f'Битлинк: {shortened}')
         except requests.exceptions.HTTPError:
             print('Не корректная ссылка!')
-
 
 if __name__ == '__main__':
     main()
